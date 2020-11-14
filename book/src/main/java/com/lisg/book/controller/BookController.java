@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @program: springcloud-library
@@ -28,8 +28,14 @@ public class BookController {
     public ResponseEntity<Book> getBooks(@RequestParam(value = "bookId", required = false) Long bookId,
                                    @RequestParam(value = "title", required = false) String title,
                                    @RequestParam(value = "author", required = false) String author) {
-        Book book = bookService.getBookById(bookId);
-        return new ResponseEntity(book, HttpStatus.OK);
+        List<Book> bookList = bookService.getBook(bookId, title, author);
+        return new ResponseEntity(bookList, HttpStatus.OK);
+    }
+
+    @PostMapping("/book/add")
+    public ResponseEntity addBook(@RequestBody Book book) {
+        bookService.saveBook(book);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

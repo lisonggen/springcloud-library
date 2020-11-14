@@ -2,9 +2,14 @@ package com.lisg.book.service.impl;
 
 import com.lisg.book.mapper.BookMapper;
 import com.lisg.book.service.BookService;
+import common.constant.Const;
 import common.entity.Book;
+import common.util.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @program: springcloud-library
@@ -19,8 +24,16 @@ public class BookServiceImpl implements BookService {
     private BookMapper bookMapper;
 
     @Override
-    public Book getBookById(Long bookId) {
-        return bookMapper.selectById(bookId);
+    public List<Book> getBook(Long bookId, String title, String author) {
+        return bookMapper.selectBook(bookId, title, author);
     }
 
+    @Override
+    public Integer saveBook(Book book) {
+        SnowflakeIdWorker sf = new SnowflakeIdWorker();
+        book.setBookId(sf.nextId());
+        book.setCreateTime(new Date());
+        book.setStatus(Const.BookStatus.NORMAL);
+        return bookMapper.insert(book);
+    }
 }

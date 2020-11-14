@@ -10,7 +10,7 @@ spring:
   application:
     name: book
   datasource:
-    url: jdbc:mysql://localhost:3306/library?useSSL=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/library?useSSL=false&useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver

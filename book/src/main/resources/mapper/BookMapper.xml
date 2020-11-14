@@ -12,7 +12,7 @@
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <select id="selectById" parameterType="map" resultMap="BaseResultMap">
+  <select id="selectBook" parameterType="map" resultMap="BaseResultMap">
     select book_id,
             title,
             book_type,
@@ -23,7 +23,17 @@
             publish_time,
             create_time
       from book
-     where book_id = #{bookId,jdbcType=BIGINT}
+     where 1=1
+    <if test="bookId != null">
+       and book_id = #{bookId,jdbcType=BIGINT}
+    </if>
+    <if test="author != null and author != ''">
+       and author = #{author,jdbcType=VARCHAR}
+    </if>
+    <if test="title != null and title != ''">
+       and title = #{title,jdbcType=VARCHAR}
+    </if>
+
   </select>
 
   <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
@@ -40,39 +50,28 @@
      where id = #{id,jdbcType=VARCHAR}
   </delete>
 
-  <insert id="insertSelective" parameterType="common.entity.Book">
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into book
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        title,
-      </if>
-      <if test="auth != null">
-        auth,
-      </if>
-      <if test="wordCount != null">
-        word_count,
-      </if>
-      <if test="publishDate != null">
-        publish_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="auth != null">
-        #{auth,jdbcType=VARCHAR},
-      </if>
-      <if test="wordCount != null">
-        #{wordCount,jdbcType=INTEGER},
-      </if>
-      <if test="publishDate != null">
-        #{publishDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
+  <insert id="insert" parameterType="common.entity.Book">
+    insert into book (
+      book_id,
+      title,
+      book_type,
+      description,
+      author,
+      word_count,
+      status,
+      publish_time,
+      create_time
+    ) values (
+      #{bookId,jdbcType=BIGINT},
+      #{title,jdbcType=VARCHAR},
+      #{bookType,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      #{author,jdbcType=VARCHAR},
+      #{wordCount,jdbcType=INTEGER},
+      #{status,jdbcType=VARCHAR},
+      #{publishTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP}
+    )
   </insert>
   <update id="updateById" parameterType="common.entity.Book">
     update book
