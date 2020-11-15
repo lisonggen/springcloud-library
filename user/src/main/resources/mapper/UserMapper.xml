@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisg.user.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="common.entity.User">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="id_card_type" jdbcType="VARCHAR" property="idCardType" />
+    <result column="id_card_num" jdbcType="VARCHAR" property="idCardNum" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <select id="selectUsers" parameterType="map" resultMap="BaseResultMap">
+    select user_id,
+            user_name,
+            id_card_type,
+            id_card_num,
+            phone,
+            email,
+            password,
+            address,
+            birthday,
+            gender,
+            role,
+            create_time,
+            update_time
+      from user
+     where 1=1
+    <if test="userId != null">
+       and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="userName != null and userName != ''">
+       and user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="idCardType != null and idCardType != ''">
+       and id_card_type = #{idCardType,jdbcType=VARCHAR}
+    </if>
+    <if test="idCardNum != null and idCardNum != ''">
+      and id_card_num = #{idCardNum,jdbcType=VARCHAR}
+    </if>
+    <if test="email != null and email != ''">
+      and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="phone != null and phone != ''">
+      and phone = #{phone,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <insert id="insert" parameterType="common.entity.User">
+    insert into user (
+            user_id,
+            user_name,
+            id_card_type,
+            id_card_num,
+            phone,
+            email,
+            password,
+            address,
+            birthday,
+            gender,
+            role,
+            create_time,
+            update_time
+    ) values (
+            #{userId,jdbcType=BIGINT},
+            #{userName,jdbcType=VARCHAR},
+            #{idCardType,jdbcType=VARCHAR},
+            #{idCardNum,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{birthday,jdbcType=TIMESTAMP},
+            #{gender,jdbcType=VARCHAR},
+            #{role,jdbcType=VARCHAR},
+            now(),
+            now()
+    )
+  </insert>
+</mapper>
