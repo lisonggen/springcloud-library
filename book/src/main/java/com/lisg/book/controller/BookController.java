@@ -25,7 +25,7 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping("/book/get")
-    public ResponseEntity<Book> getBooks(@RequestParam(value = "bookId", required = false) Long bookId,
+    public ResponseEntity<List<Book>> getBooks(@RequestParam(value = "bookId", required = false) Long bookId,
                                    @RequestParam(value = "title", required = false) String title,
                                    @RequestParam(value = "author", required = false) String author) {
         List<Book> bookList = bookService.getBook(bookId, title, author);
