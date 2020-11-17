@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="book" />
+        <module name="book-service-api" />
         <module name="common" />
         <module name="eureka" />
         <module name="user" />
@@ -16,7 +17,8 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="book" options="-parameters" />
-      <module name="common" options="-parameters" />
+      <module name="book-service-api" options="-parameters" />
+      <module name="common" options="" />
       <module name="eureka" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>

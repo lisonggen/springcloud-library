@@ -11,6 +11,7 @@
     <modules>
         <module>common</module>
         <module>book</module>
+        <module>book-service-api</module>
     </modules>
 
     <dependencies>

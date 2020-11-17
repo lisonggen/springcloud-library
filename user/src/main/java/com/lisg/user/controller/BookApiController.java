@@ -1,6 +1,6 @@
 package com.lisg.user.controller;
 
-import com.lisg.user.api.BookService;
+import com.lisg.service.BookApiService;
 import common.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +20,13 @@ import java.util.List;
 public class BookApiController {
 
     @Autowired
-    public BookService bookService;
+    public BookApiService bookApiService;
 
     @GetMapping("/user/book/get")
     public ResponseEntity<List<Book>> getBooks(@RequestParam(value = "bookId", required = false) Long bookId,
                                                @RequestParam(value = "title", required = false) String title,
                                                @RequestParam(value = "author", required = false) String author) {
-        ResponseEntity<List<Book>> responseEntity = bookService.getBooks(bookId, title, author);
+        ResponseEntity<List<Book>> responseEntity = bookApiService.getBooks(bookId, title, author);
         return responseEntity;
     }
 }
