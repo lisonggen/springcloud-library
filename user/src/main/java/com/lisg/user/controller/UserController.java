@@ -1,7 +1,9 @@
 package com.lisg.user.controller;
 
+import com.lisg.user.api.BookClient;
 import com.lisg.user.service.UserService;
 import com.lisg.user.util.PasswordUtil;
+import common.entity.Book;
 import common.entity.User;
 import common.util.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookClient bookClient;
+
     @PostMapping("/user/add")
     public ResponseEntity addUser(@RequestBody User user) {
         userService.saveUser(user);
@@ -41,5 +46,12 @@ public class UserController {
 
         List<User> userList = userService.getUsers(userId, userName, email, phone, idCardType, idCardNum);
         return new ResponseEntity(userList, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/book/get")
+    public ResponseEntity<List<Book>> getBooks(@RequestParam(value = "bookId", required = false) Long bookId,
+                                               @RequestParam(value = "title", required = false) String title,
+                                               @RequestParam(value = "author", required = false) String author) {
+        return bookClient.getBooks(bookId, title, author);
     }
 }

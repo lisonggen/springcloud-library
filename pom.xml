@@ -11,7 +11,7 @@
     <modules>
         <module>common</module>
         <module>book</module>
-        <module>book-service-api</module>
+        <module>user</module>
     </modules>
 
     <dependencies>
